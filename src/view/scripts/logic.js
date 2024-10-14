@@ -4,7 +4,7 @@ formElement.addEventListener('submit', (event) => {
   event.preventDefault()
   const agenda = document.getElementById('POST-agenda').value
   const agendaJson = JSON.stringify({ agenda })
-  fetch('http://localhost:4000/api/', {
+  fetch('http://localhost:4000/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
