@@ -3,20 +3,30 @@ import { Profesor } from '../model/Profesor.js'
 
 export function postAgenda (req, res) {
   const body = req.body
-  const horarios = body.agenda.split(';')
-  const agendas = crearAgendaProfesores(horarios)
-  console.log(agendas)
-  res.send({ data: agendas })
+  const horario = body.agenda.split(';')
+  const dataProfesores = separarDataPorProfesor(horario)
+  const agendas = crearAgendaPorProfesor(dataProfesores)
+  res.send(agendas)
 }
 
-function crearAgendaProfesores (horarios) {
-  const asignaciones = []
-  let result
-  horarios.forEach(item => {
+function separarDataPorProfesor (horario) {
+  const profesores = []
+  horario.forEach(item => {
     const profesorData = item.split(' ')
-    const asignacion = new Asignacion(profesorData[1], profesorData[2], profesorData[3])
-    asignaciones.unshift(new Profesor(profesorData[0], asignacion))
-    result = Object.groupBy(asignaciones, ({ nombre }) => nombre)
+    profesores.unshift(profesorData)
   })
-  return result
+  return profesores
+}
+
+function crearAgendaPorProfesor (profesores) {
+  const agendas = []
+  profesores.forEach(item => {
+    const profeYaGuardado = agendas.find((profesor) => profesor.nombre === item[0])
+    if (!profeYaGuardado) {
+      agendas.push(new Profesor(item[0], [new Asignacion(item[1], item[2], item[3])]))
+    } else {
+      profeYaGuardado.asignaciones.push(new Asignacion(item[1], item[2], item[3]))
+    }
+  })
+  return agendas
 }
