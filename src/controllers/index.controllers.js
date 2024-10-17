@@ -3,30 +3,34 @@ import { Profesor } from '../model/Profesor.js'
 
 export function postAgenda (req, res) {
   const body = req.body
-  const horario = body.agenda.split(';')
-  const dataProfesores = separarDataPorProfesor(horario)
-  const agendas = crearAgendaPorProfesor(dataProfesores)
-  res.send(agendas)
+  const dataProfesores = asignarProfesores(body.agenda)
+  res.send(dataProfesores)
 }
 
-function separarDataPorProfesor (horario) {
-  const profesores = []
-  horario.forEach(item => {
-    const profesorData = item.split(' ')
-    profesores.unshift(profesorData)
+function asignarProfesores (horarioConProfes) {
+  const allData = horarioConProfes.split('--')
+  const profesores = crearProfesores(allData[0])
+  const listaAsignaciones = crearAsignaciones(allData[1])
+  listaAsignaciones.forEach(item => {
+    const profesor = profesores.find((profesor) => profesor.nombre === item[0])
+    profesor.asignaciones.unshift(new Asignacion(item[1], item[2], item[3]))
   })
   return profesores
 }
 
-function crearAgendaPorProfesor (profesores) {
-  const agendas = []
-  profesores.forEach(item => {
-    const profeYaGuardado = agendas.find((profesor) => profesor.nombre === item[0])
-    if (!profeYaGuardado) {
-      agendas.push(new Profesor(item[0], [new Asignacion(item[1], item[2], item[3])]))
-    } else {
-      profeYaGuardado.asignaciones.push(new Asignacion(item[1], item[2], item[3]))
-    }
+function crearProfesores (stringProfesores) {
+  const profesores = stringProfesores.split(' ')
+  const profesoresObjetos = []
+  profesores.forEach(item => profesoresObjetos.unshift(new Profesor(item, [])))
+  return profesoresObjetos
+}
+
+function crearAsignaciones (stringAsignaciones) {
+  const asignaciones = []
+  const asignacionesData = stringAsignaciones.split(';')
+  asignacionesData.forEach(item => {
+    const asignacionData = item.split(' ')
+    asignaciones.unshift(asignacionData)
   })
-  return agendas
+  return asignaciones
 }
