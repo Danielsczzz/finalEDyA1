@@ -10,6 +10,6 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static('./src/view'))
 
-app.use(indexRoutes)
+app.use('/api', indexRoutes)
 
 app.listen(app.get('port'), () => console.log(`servidor corriendo en: http://localhost:${app.get('port')}`))
