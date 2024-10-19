@@ -1,16 +1,28 @@
 import { Asignacion } from '../model/Asignacion.js'
 import { Profesor } from '../model/Profesor.js'
+import { ordenamientoPorNombre } from '../util.js'
 
-export function postAgenda (req, res) {
+export function postCalcular (req, res) {
   const body = req.body
-  const dataProfesores = asignarProfesores(body.agenda)
-  res.send(dataProfesores)
+  const listaEntrada = body.entrada.split('--')
+  const profesores = asignarProfesores(listaEntrada)
+  profesores.forEach(item => {
+    item.obtenerMejorSiesta()
+  })
+  res.send(profesores)
+}
+
+export function postOrdenar (req, res) {
+  const body = req.body
+  const listaEntrada = body.entrada.split('--')
+  const nombresProfesores = listaEntrada[0].split(' ')
+  const result = ordenamientoPorNombre(nombresProfesores)
+  res.send(result)
 }
 
 function asignarProfesores (horarioConProfes) {
-  const allData = horarioConProfes.split('--')
-  const profesores = crearProfesores(allData[0])
-  const listaAsignaciones = crearAsignaciones(allData[1])
+  const profesores = crearProfesores(horarioConProfes[0])
+  const listaAsignaciones = crearAsignaciones(horarioConProfes[1])
   listaAsignaciones.forEach(item => {
     const profesor = profesores.find((profesor) => profesor.nombre === item[0])
     profesor.asignaciones.unshift(new Asignacion(item[1], item[2], item[3]))
