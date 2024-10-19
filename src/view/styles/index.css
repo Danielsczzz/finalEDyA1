@@ -38,6 +38,11 @@ h1 {
   font-size: 1rem;
 }
 
+.div-botones {
+  display: flex;
+  gap: 1rem;
+}
+
 .boton-estilo {
   background-color: #1D4ED8;
   color: white;
