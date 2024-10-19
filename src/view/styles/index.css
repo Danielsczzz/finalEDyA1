@@ -33,9 +33,10 @@ h1 {
   margin-bottom: 0.75rem;
 }
 
-#POST-agenda {
+textarea {
   color: rgb(40, 40, 40);
   font-size: 1rem;
+  overflow-y: scroll;
 }
 
 .div-botones {
