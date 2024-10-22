@@ -1,8 +1,8 @@
-export function ordenamientoRapido (lista, inicio, fin) {
+export function ordenamientoRapido (listaSiestas, inicio, fin) {
   if (inicio < fin) {
-    const q = particion(lista, inicio, fin)
-    ordenamientoRapido(lista, inicio, q - 1)
-    ordenamientoRapido(lista, q + 1, fin)
+    const q = particion(listaSiestas, inicio, fin)
+    ordenamientoRapido(listaSiestas, inicio, q - 1)
+    ordenamientoRapido(listaSiestas, q + 1, fin)
   }
 }
 
@@ -10,7 +10,10 @@ function particion (lista, inicio, fin) {
   const x = lista[fin]
   let i = inicio - 1
   for (let j = inicio; j <= fin - 1; j++) {
-    if (lista[j] >= x) {
+    // console.log(lista[j])
+    // console.log(typeof lista[j])
+
+    if (lista[j].siesta >= x.siesta) {
       i += 1
       const aux = lista[i]
       lista[i] = lista[j]
