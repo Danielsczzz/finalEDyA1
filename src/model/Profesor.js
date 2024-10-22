@@ -4,13 +4,15 @@ export class Profesor {
   constructor (nombre, asignaciones) {
     this.nombre = nombre
     this.asignaciones = asignaciones
-    this.mejorSiesta = 0
+    this.siesta = 0
+    this.tiempoInicial = 0
   }
 
   obtenerMejorSiesta () {
     const siestas = this.#obtenerSiestas()
     ordenamientoRapido(siestas, 0, siestas.length - 1)
-    this.mejorSiesta = siestas[0]
+    this.siesta = siestas[0].siesta
+    this.tiempoInicial = siestas[0].tiempoInicial
   }
 
   #obtenerSiestas () {
@@ -23,8 +25,10 @@ export class Profesor {
       const siesta = this.asignaciones[i + 1].tiempoInicial - this.asignaciones[i].tiempoFinal
       siestas.push({ siesta, tiempoInicial: this.asignaciones[i].tiempoFinal })
     }
-
-    console.log(siestas)
     return siestas
+  }
+
+  toString () {
+    return `${this.nombre} ${this.siesta} ${this.tiempoInicial}`
   }
 }

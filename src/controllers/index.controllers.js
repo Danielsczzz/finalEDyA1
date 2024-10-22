@@ -1,23 +1,31 @@
 import { Asignacion } from '../model/Asignacion.js'
 import { Profesor } from '../model/Profesor.js'
-import { ordenamientoPorNombre } from '../util.js'
+import { ordenamientoPorNombre, ordenamientoRapido } from '../util.js'
 
 export function postCalcular (req, res) {
   const body = req.body
-  const listaEntrada = body.entrada.split('--')
-  const profesores = asignarProfesores(listaEntrada)
-  profesores.forEach(item => {
-    item.obtenerMejorSiesta()
-  })
-  res.send(profesores)
+  const resultado = calcularLongestNap(body.entrada)
+  const resultadoJson = JSON.stringify({ salida: resultado })
+  res.send(resultadoJson)
 }
 
 export function postOrdenar (req, res) {
   const body = req.body
   const listaEntrada = body.entrada.split('--')
   const nombresProfesores = listaEntrada[0].split(' ')
-  const result = ordenamientoPorNombre(nombresProfesores)
-  res.send(result)
+  const resultado = ordenamientoPorNombre(nombresProfesores)
+  res.send(resultado)
+}
+
+function calcularLongestNap (agendas) {
+  const listaEntrada = agendas.split('--')
+  const profesores = asignarProfesores(listaEntrada)
+  profesores.forEach(item => {
+    item.obtenerMejorSiesta()
+  })
+  ordenamientoRapido(profesores, 0, profesores.length - 1)
+  const salida = formatearSalida(profesores)
+  return salida
 }
 
 function asignarProfesores (horarioConProfes) {
@@ -45,4 +53,10 @@ function crearAsignaciones (stringAsignaciones) {
     asignaciones.unshift(asignacionData)
   })
   return asignaciones
+}
+
+function formatearSalida (profesores) {
+  let stringSalida = ''
+  profesores.forEach(item => { stringSalida += item.toString() + '\n' })
+  return stringSalida
 }
