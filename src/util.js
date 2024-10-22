@@ -10,9 +10,6 @@ function particion (lista, inicio, fin) {
   const x = lista[fin]
   let i = inicio - 1
   for (let j = inicio; j <= fin - 1; j++) {
-    // console.log(lista[j])
-    // console.log(typeof lista[j])
-
     if (lista[j].siesta >= x.siesta) {
       i += 1
       const aux = lista[i]

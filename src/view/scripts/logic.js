@@ -4,7 +4,8 @@ const botonOrdenar = document.getElementById('boton-ordenar')
 botonCalcular.addEventListener('click', async (event) => {
   event.preventDefault()
   const respuesta = await obtenerRespuestaCalcular()
-  desplegarResultado(respuesta)
+  console.log(respuesta)
+  desplegarResultado(respuesta.salida)
 })
 
 botonOrdenar.addEventListener('click', async (event) => {
