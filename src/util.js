@@ -30,7 +30,3 @@ function particion (lista, inicio, fin) {
   lista[fin] = aux
   return i + 1
 }
-
-export function ordenamientoPorNombre (listaProfesores) {
-  return listaProfesores.sort()
-}

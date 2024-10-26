@@ -1,20 +1,12 @@
 import { Asignacion } from '../model/Asignacion.js'
 import { Profesor } from '../model/Profesor.js'
-import { ordenamientoPorNombre, ordenarSiestas } from '../util.js'
+import { ordenarSiestas } from '../util.js'
 
 export function postCalcular (req, res) {
   const body = req.body
   const resultado = calcularLongestNap(body.entrada)
   const resultadoJson = JSON.stringify({ salida: resultado })
   res.send(resultadoJson)
-}
-
-export function postOrdenar (req, res) {
-  const body = req.body
-  const listaEntrada = body.entrada.split('--')
-  const nombresProfesores = listaEntrada[0].split(' ')
-  const resultado = ordenamientoPorNombre(nombresProfesores)
-  res.send(resultado)
 }
 
 function calcularLongestNap (agendas) {

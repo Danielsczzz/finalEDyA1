@@ -1,17 +1,10 @@
 const botonCalcular = document.getElementById('boton-calcular')
-const botonOrdenar = document.getElementById('boton-ordenar')
 
 botonCalcular.addEventListener('click', async (event) => {
   event.preventDefault()
   const respuesta = await obtenerRespuestaCalcular()
   console.log(respuesta)
   desplegarResultado(respuesta.salida)
-})
-
-botonOrdenar.addEventListener('click', async (event) => {
-  event.preventDefault()
-  const respuesta = await obtenerRespuestaOrdenar()
-  desplegarResultado(respuesta)
 })
 
 async function obtenerRespuestaCalcular () {
@@ -24,19 +17,6 @@ async function obtenerRespuestaCalcular () {
     body: entrada
   })
   return respuesta.json()
-}
-
-async function obtenerRespuestaOrdenar () {
-  const entrada = obtenerEntrada()
-  const respuesta = await fetch('http://localhost:4000/api/ordenar', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: entrada
-  })
-  const data = await respuesta.json()
-  return data
 }
 
 function obtenerEntrada () {
