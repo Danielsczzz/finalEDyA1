@@ -1,6 +1,6 @@
 import { Asignacion } from '../model/Asignacion.js'
 import { Profesor } from '../model/Profesor.js'
-import { ordenamientoPorNombre, ordenamientoRapido } from '../util.js'
+import { ordenamientoPorNombre, ordenarSiestas } from '../util.js'
 
 export function postCalcular (req, res) {
   const body = req.body
@@ -23,8 +23,8 @@ function calcularLongestNap (agendas) {
   profesores.forEach(item => {
     item.obtenerMejorSiesta()
   })
-  ordenamientoRapido(profesores, 0, profesores.length - 1)
-  const salida = formatearSalida(profesores)
+  const resultado = ordenarSiestas(profesores)
+  const salida = formatearSalida(resultado)
   return salida
 }
 

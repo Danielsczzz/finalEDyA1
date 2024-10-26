@@ -18,7 +18,7 @@ export class Profesor {
   #obtenerSiestas () {
     const siestas = []
     const siestaInicial = parseInt(this.asignaciones[0].tiempoInicial)
-    const siestaFinal = parseInt(1140 - this.asignaciones[this.asignaciones.length - 1].tiempoFinal)
+    const siestaFinal = parseInt(1440 - this.asignaciones[this.asignaciones.length - 1].tiempoFinal)
     siestas.push({ siesta: siestaInicial, tiempoInicial: 0 })
     siestas.push({ siesta: siestaFinal, tiempoInicial: this.asignaciones[this.asignaciones.length - 1].tiempoFinal })
     for (let i = 0; i < this.asignaciones.length - 1; i++) {

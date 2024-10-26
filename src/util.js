@@ -1,3 +1,11 @@
+export function ordenarSiestas (listaProfesores) {
+  return listaProfesores.sort((a, b) => {
+    if (b.siesta - a.siesta !== 0) {
+      return b.siesta - a.siesta
+    }
+    return a.nombre.localeCompare(b.nombre)
+  })
+}
 export function ordenamientoRapido (listaSiestas, inicio, fin) {
   if (inicio < fin) {
     const q = particion(listaSiestas, inicio, fin)
